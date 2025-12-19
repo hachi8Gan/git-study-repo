@@ -11,15 +11,26 @@
             box-sizing: border-box;
         }
 
+        /* CSS Variables for easy theme customization */
+        :root {
+            --primary-color: #00ff00;
+            --secondary-color: #ff006e;
+            --accent-color: #00d9ff;
+            --bg-color: #0a0a0a;
+            --card-bg: rgba(20, 20, 20, 0.9);
+            --font-family: 'Courier New', monospace;
+        }
+
         body {
-            font-family: 'Courier New', monospace;
-            background: #0a0a0a;
-            color: #00ff00;
+            font-family: var(--font-family);
+            background: var(--bg-color);
+            color: var(--primary-color);
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            scroll-behavior: smooth;
         }
 
         .matrix-bg {
@@ -35,12 +46,45 @@
         .container {
             position: relative;
             z-index: 2;
-            width: 600px;
-            background: rgba(20, 20, 20, 0.9);
-            border: 2px solid #00ff00;
-            box-shadow: 0 0 20px #00ff00, inset 0 0 20px rgba(0, 255, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color), inset 0 0 20px rgba(0, 255, 0, 0.1);
             padding: 40px;
             animation: glitch 3s infinite;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 25px;
+                margin: 10px;
+            }
+            
+            .title {
+                font-size: 2em !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 1.8em !important;
+            }
+            
+            .subtitle {
+                font-size: 1em !important;
+            }
+            
+            .skills {
+                justify-content: center;
+            }
         }
 
         @keyframes glitch {
@@ -62,14 +106,14 @@
 
         .title {
             font-size: 2.5em;
-            color: #ff006e;
-            text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e;
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
             animation: neon-flicker 2s infinite alternate;
         }
 
         @keyframes neon-flicker {
             0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e, 0 0 30px #ff006e;
+                text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color);
             }
             20%, 24%, 55% {
                 text-shadow: none;
@@ -77,29 +121,36 @@
         }
 
         .subtitle {
-            color: #00d9ff;
+            color: var(--accent-color);
             font-size: 1.2em;
             margin-top: 10px;
-            text-shadow: 0 0 5px #00d9ff;
+            text-shadow: 0 0 5px var(--accent-color);
         }
 
         .info-section {
             margin: 20px 0;
             padding: 15px;
-            border-left: 3px solid #00ff00;
+            border-left: 3px solid var(--primary-color);
             background: rgba(0, 255, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .info-section:hover {
+            background: rgba(0, 255, 0, 0.08);
+            transform: translateX(5px);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
         }
 
         .info-label {
-            color: #ff006e;
+            color: var(--secondary-color);
             font-size: 0.9em;
             margin-bottom: 5px;
         }
 
         .info-value {
-            color: #00d9ff;
+            color: var(--accent-color);
             font-size: 1.1em;
-            text-shadow: 0 0 5px #00d9ff;
+            text-shadow: 0 0 5px var(--accent-color);
         }
 
         .skills {
@@ -112,44 +163,76 @@
         .skill-tag {
             padding: 8px 15px;
             background: rgba(0, 217, 255, 0.1);
-            border: 1px solid #00d9ff;
-            color: #00d9ff;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
             font-size: 0.9em;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
         .skill-tag:hover {
             background: rgba(0, 217, 255, 0.3);
-            box-shadow: 0 0 10px #00d9ff;
-            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--accent-color);
+            transform: translateY(-2px) scale(1.05);
         }
 
         .terminal {
             background: #000;
             padding: 15px;
             margin-top: 20px;
-            border: 1px solid #00ff00;
+            border: 1px solid var(--primary-color);
             font-size: 0.9em;
             max-height: 150px;
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) #000;
+        }
+
+        /* Custom scrollbar for terminal */
+        .terminal::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        .terminal::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
         }
 
         .terminal-line {
             margin: 5px 0;
-            animation: typing 0.5s steps(40);
+            opacity: 0;
+            animation: typing 0.5s steps(40) forwards;
         }
 
+        /* Staggered animation for terminal lines */
+        .terminal-line:nth-child(1) { animation-delay: 0.2s; }
+        .terminal-line:nth-child(2) { animation-delay: 0.5s; }
+        .terminal-line:nth-child(3) { animation-delay: 0.8s; }
+        .terminal-line:nth-child(4) { animation-delay: 1.1s; }
+        .terminal-line:nth-child(5) { animation-delay: 1.4s; }
+
         @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+            from { 
+                width: 0; 
+                opacity: 1;
+            }
+            to { 
+                width: 100%; 
+                opacity: 1;
+            }
         }
 
         .cursor {
             display: inline-block;
             width: 10px;
             height: 1em;
-            background: #00ff00;
+            background: var(--primary-color);
             animation: blink 1s infinite;
         }
 
@@ -163,18 +246,21 @@
             justify-content: center;
             gap: 20px;
             margin-top: 30px;
+            flex-wrap: wrap;
         }
 
         .social-btn {
             padding: 10px 20px;
             background: transparent;
-            border: 2px solid #ff006e;
-            color: #ff006e;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
             text-decoration: none;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s;
+            font-family: var(--font-family);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
         .social-btn::before {
@@ -184,13 +270,15 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: #ff006e;
-            transition: left 0.3s;
+            background: var(--secondary-color);
+            transition: left 0.3s ease;
             z-index: -1;
         }
 
         .social-btn:hover {
             color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--secondary-color);
         }
 
         .social-btn:hover::before {
@@ -203,7 +291,7 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(to right, transparent, #00ff00, transparent);
+            background: linear-gradient(to right, transparent, var(--primary-color), transparent);
             animation: scan 4s linear infinite;
             z-index: 999;
         }
@@ -211,6 +299,22 @@
         @keyframes scan {
             from { top: 0; }
             to { top: 100%; }
+        }
+
+        /* Enhanced container hover effect */
+        .container:hover {
+            box-shadow: 0 0 30px var(--primary-color), inset 0 0 25px rgba(0, 255, 0, 0.15);
+        }
+
+        /* Selection styling */
+        ::selection {
+            background: var(--secondary-color);
+            color: #000;
+        }
+        
+        ::-moz-selection {
+            background: var(--secondary-color);
+            color: #000;
         }
     </style>
 </head>
@@ -262,20 +366,34 @@
     </div>
 
     <script>
-        // Matrix rain effect
+        // Matrix rain effect with performance optimizations
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // Set initial canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // Recalculate columns and reset drops array when window resizes
+            columns = Math.floor(canvas.width / fontSize);
+            drops = Array(columns).fill(1);
+        }
 
-        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン01';
+        // Initialize canvas and variables
+        resizeCanvas();
+
+        // Characters for matrix rain (mix of Japanese and numbers)
+        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789@#$%&*';
         const charArray = chars.split('');
         const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
+        let columns = Math.floor(canvas.width / fontSize);
+        let drops = Array(columns).fill(1);
+        
+        // Use requestAnimationFrame for better performance
+        let animationId;
+        
         function draw() {
+            // Semi-transparent black background for trail effect
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -283,22 +401,38 @@
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < drops.length; i++) {
+                // Random character from array
                 const text = charArray[Math.floor(Math.random() * charArray.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
+                // Reset drop when it reaches bottom with random probability
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
                 drops[i]++;
             }
+            
+            // Continue the animation
+            animationId = requestAnimationFrame(draw);
         }
 
-        setInterval(draw, 33);
+        // Start the animation
+        draw();
 
-        // Resize canvas on window resize
+        // Resize canvas on window resize with debounce to avoid performance issues
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeCanvas, 200);
+        });
+        
+        // Cleanup animation when page is hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                cancelAnimationFrame(animationId);
+            } else {
+                draw();
+            }
         });
     </script>
 </body>
